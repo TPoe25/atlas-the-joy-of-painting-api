@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS episodes;
 DROP TABLE IF EXISTS colors;
 DROP TABLE IF EXISTS subjects;
 
+
 CREATE TABLE episodes (
     id SERIAL PRIMARY KEY,
     title TEXT UNIQUE,

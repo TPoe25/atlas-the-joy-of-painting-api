@@ -53,7 +53,7 @@ def load_paintings():
                     INSERT INTO episode_colors (episode_id, color_id)
                     VALUES (%s, %s)
                     ON CONFLICT DO NOTHING;
-                """, (episode_id, color_id))
+                """, (ep_id, color_id))
 
     conn.commit()
     conn.close()

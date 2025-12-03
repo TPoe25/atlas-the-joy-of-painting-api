@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import csv
 import psycopg2 # for PostgreSQL database connectivity/ installed
-from clean_title import clean_title
+from helpers.clean_title import clean_title
+from helpers.safe_int import safe_int
 
 # Create a database connection
 DB_NAME = "the_joy_of_painting"
@@ -14,7 +15,7 @@ def load_paintings():
         connection = psycopg2.connect(dbname=DB_NAME)
         cursor = connection.cursor()
     except Exception as error:
-        print(f"Error connecting to database", error)
+        print("Error connecting to database:", error)
         return
 
     try:
@@ -23,8 +24,8 @@ def load_paintings():
 
             for row in reader:
                 title_clean = clean_title(row.get("painting_title"))
-                season_number = int(row.get("season"))
-                episode_number = int(row.get("episode"))
+                season_number = safe_int(row.get("season"))
+                episode_number = safe_int(row.get("episode"))
                 img_url = row.get("img_src")
                 youtube_url = row.get("youtube_src")
 

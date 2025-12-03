@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
+from typing import Any
 
-def clean_title(raw_title: str) -> str:
+def clean_title(raw_title: Any) -> str:
     """cleans the painting title by removing unwanted characters."""
 
     # Check if the title is empty or None
@@ -8,9 +9,9 @@ def clean_title(raw_title: str) -> str:
         return ""
 
     # Remove leading/trailing whitespace and unwanted characters
-    title = str(raw_title).strip()
-    title = title.replace('"', "").replace("'", "")
-    title = " ".join(title.split())
+    text = str(raw_title).strip()
+    text = text.replace('"', "").replace("'", "")
+    text = " ".join(text.split())
 
     # Normalize the title by converting to title case
-    return title.title()
+    return text.title()

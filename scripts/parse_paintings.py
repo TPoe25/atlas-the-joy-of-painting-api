@@ -90,7 +90,7 @@ def load_paintings():
         connection.commit()
 
     except Exception as error:
-        print(f"Error loading painting data", error)
+        print("Error loading painting data", error)
     finally:
         cursor.close()
         connection.close()

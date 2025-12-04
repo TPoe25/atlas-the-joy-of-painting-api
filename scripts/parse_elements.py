@@ -11,7 +11,7 @@ except Exception:
 
 # Create a database connection
 DB_NAME = "the_joy_of_painting"
-ELEMENTS_FILE = "data/episode_elements.csv"
+ELEMENTS_FILE = "data/elements-by-episode.csv"
 
 def load_elements():
     """ Loads episode elements from a CSV file into the database."""
@@ -85,4 +85,6 @@ def load_elements():
     cursor.close()
     connection.close()
 
-
+if __name__ == "__main__":
+    load_elements()
+    """Loads episode elements from a CSV file into the database."""

@@ -8,7 +8,7 @@ sys.path.append(ROOT_DIR)
 print("Starting ETL")
 
 os.system("python3 scripts/parse_paintings.py")
-os.system("python3 scripts/parse_elements.py")
 os.system("python3 scripts/parse_dates.py")
+os.system("python3 scripts/parse_elements.py")
 
 print("ETL completed successfully")

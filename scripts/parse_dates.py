@@ -23,14 +23,16 @@ def load_dates():
             if not match:
                 continue
 
-            cleaned_title = clean_title(match.group(1))
+            raw_title = match.group(1)
+
+            cleaned_title = clean_title(raw_title)
 
             date_string = match.group(2)
 
             try:
                 air_date = datetime.strptime(date_string, "%B %d, %Y") # format: Month Day, Year
             except Exception:
-                print("Failed to parse:", cleaned_title, date_string)
+                print("Failed to parse:", raw_title, date_string)
                 continue
 
             month = air_date.month

@@ -23,7 +23,7 @@ def load_dates():
             if not match:
                 continue
 
-            raw_title = match.group(1)
+            raw_title = clean_title(match.group(1))
             date_string = match.group(2)
 
             title_clean = clean_title(raw_title)

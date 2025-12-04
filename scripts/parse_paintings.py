@@ -53,11 +53,9 @@ def load_paintings():
                 ep_id = result[0]
 
                 try:
-
                     # parse through color arrays and insert into database
                     color_list = eval(row["colors"])
                     hex_list = eval(row["color_hex"])
-
                 except Exception:
                     print(f"Failed to parse color arrays for title: {title_clean}")
                     continue

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from typing import Any, List, Optional
 from flask import Blueprint, request, jsonify
 from api.db import get_connection
 
@@ -8,6 +9,9 @@ episodes_blueprint = Blueprint("episodes", __name__, url_prefix="/episodes")
 def get_episodes():
     """Returns a list of all episodes."""
     db = get_connection()
+    if db is None:
+        return jsonify([])
+
     cursor = db.cursor()
 
     # Incoming filter parameters
@@ -44,7 +48,7 @@ def get_episodes():
                 SELECT episode_id
                 FROM episode_subjects es
                 JOIN subjects s ON s.id = es.subject_id
-                WHERE s.name = ANY(%s)
+                WHERE s.name = ANY(%s::text[])
             )
         """)
         parameters.append(subjects_list)
@@ -56,7 +60,7 @@ def get_episodes():
                 SELECT episode_id
                 FROM episode_colors ec
                 JOIN colors c ON c.id = ec.color_id
-                WHERE c.name = ANY(%s)
+                WHERE c.name = ANY(%s::text[])
             )
         """)
         parameters.append(colors_list)
@@ -68,36 +72,11 @@ def get_episodes():
     cursor.execute(query, parameters)
     episodes = cursor.fetchall()
 
-    # Build JSON response
-    response_list = []
-
-    for ep in episodes:
-        episode_id = ep[0]
-
-        # Fetch colors for this episode
-        cursor.execute("""
-            SELECT c.name
-            FROM colors c
-            JOIN episode_colors ec ON ec.color_id = c.id
-            WHERE ec.episode_id = %s
-        """, (episode_id,))
-        ep_colors = [row[0] for row in cursor.fetchall()]
-
-        # Fetch subjects for this episode
-        cursor.execute("""
-            SELECT s.name
-            FROM subjects s
-            JOIN episode_subjects es ON es.subject_id = s.id
-            WHERE es.episode_id = %s
-        """, (episode_id,))
-        ep_subjects = [row[0] for row in cursor.fetchall()]
-
-    # Format results into a JSON response
+    # Format results into JSON
     response_list = []
     for ep in episodes:
         episode_id = ep[0]
 
-        # get colors and subjects associated with the episode
         cursor.execute("""
             SELECT c.name
             FROM colors c

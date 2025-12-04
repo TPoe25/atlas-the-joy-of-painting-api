@@ -9,7 +9,7 @@ def clean_title(raw_title: Any) -> str:
         return ""
 
     # Remove leading/trailing whitespace and unwanted characters
-    text = str(raw_title).strip()
+    text = str(clean_title).strip()
     text = text.replace('"', "").replace("'", "")
     text = " ".join(text.split())
 

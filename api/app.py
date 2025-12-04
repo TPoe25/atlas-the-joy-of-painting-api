@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask
+from flask import Flask, jsonify, Blueprint
 from routes.episodes import episodes_blueprint
 from routes.colors import colors_blueprint
 from routes.subjects import subjects_blueprint

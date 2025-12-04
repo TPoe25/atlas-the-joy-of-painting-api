@@ -11,3 +11,5 @@ def get_connection():
     except Exception as error:
         print("Error connecting to database:", error)
         return None
+    print("Connected to database successfully")
+
